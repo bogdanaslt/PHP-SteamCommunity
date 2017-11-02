@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2016-02-08
- * Time: 12:16 AM
- */
 
-namespace waylaidwanderer\SteamCommunity\MobileAuth;
-
+namespace bogdanaslt\SteamCommunity\MobileAuth;
 
 class SteamGuard
 {

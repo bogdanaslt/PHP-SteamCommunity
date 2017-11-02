@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-24
- * Time: 8:37 AM
- */
 
-namespace waylaidwanderer\SteamCommunity\Enum;
-
+namespace bogdanaslt\SteamCommunity\Enum;
 
 abstract class CreateAccountResult
 {

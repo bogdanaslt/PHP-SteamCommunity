@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 2:22 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\TradeOffers;
+namespace bogdanaslt\SteamCommunity\TradeOffers;
 
-use waylaidwanderer\SteamCommunity\Helper;
-use waylaidwanderer\SteamCommunity\SteamCommunity;
-use waylaidwanderer\SteamCommunity\TradeOffers\Trade\TradeAsset;
-use waylaidwanderer\SteamCommunity\TradeOffers\Trade\TradeUser;
+use bogdanaslt\SteamCommunity\Helper;
+use bogdanaslt\SteamCommunity\SteamCommunity;
+use bogdanaslt\SteamCommunity\TradeOffers\Trade\TradeAsset;
+use bogdanaslt\SteamCommunity\TradeOffers\Trade\TradeUser;
 
 class Trade implements \JsonSerializable
 {

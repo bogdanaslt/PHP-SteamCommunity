@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2016-02-08
- * Time: 12:18 AM
- */
 
-namespace waylaidwanderer\SteamCommunity\MobileAuth;
+namespace bogdanaslt\SteamCommunity\MobileAuth;
 
-
-use waylaidwanderer\SteamCommunity\Helper;
+use bogdanaslt\SteamCommunity\Helper;
 
 class TimeAligner
 {

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2016-02-18
- * Time: 12:14 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\Group\History;
-
+namespace bogdanaslt\SteamCommunity\Group\History;
 
 class HistoryItem
 {

@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2016-02-08
- * Time: 3:00 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\MobileAuth\Confirmations;
+namespace bogdanaslt\SteamCommunity\MobileAuth\Confirmations;
 
 
 class Confirmation

@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 7:07 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\Market;
+namespace bogdanaslt\SteamCommunity\Market;
 
-
-use waylaidwanderer\SteamCommunity\SteamException;
+use bogdanaslt\SteamCommunity\SteamException;
 
 class Listings
 {

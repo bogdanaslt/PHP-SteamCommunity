@@ -6,7 +6,7 @@
  * Time: 10:26 AM
  */
 
-namespace waylaidwanderer\SteamCommunity\TradeOffers\TradeOffer;
+namespace bogdanaslt\SteamCommunity\TradeOffers\TradeOffer;
 
 
 abstract class State

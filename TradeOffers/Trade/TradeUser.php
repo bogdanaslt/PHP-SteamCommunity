@@ -1,15 +1,9 @@
 <?php
-namespace waylaidwanderer\SteamCommunity\TradeOffers\Trade;
 
+namespace bogdanaslt\SteamCommunity\TradeOffers\Trade;
 
-use waylaidwanderer\SteamCommunity\TradeOffers\Trade;
+use bogdanaslt\SteamCommunity\TradeOffers\Trade;
 
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 2:29 PM
- */
 class TradeUser implements \JsonSerializable
 {
     /** @var TradeAsset[] $assets */

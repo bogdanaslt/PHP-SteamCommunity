@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2016-02-18
- * Time: 5:04 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\User;
+namespace bogdanaslt\SteamCommunity\User;
 
 
 class Group

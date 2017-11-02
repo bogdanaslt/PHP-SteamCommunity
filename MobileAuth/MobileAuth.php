@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2016-02-08
- * Time: 12:53 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\MobileAuth;
+namespace bogdanaslt\SteamCommunity\MobileAuth;
 
 
-use waylaidwanderer\SteamCommunity\SteamCommunity;
+use bogdanaslt\SteamCommunity\SteamCommunity;
 
 class MobileAuth
 {

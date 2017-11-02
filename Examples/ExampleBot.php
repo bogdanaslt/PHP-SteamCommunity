@@ -6,9 +6,9 @@
 require '../vendor/autoload.php';
 defined('STDIN') or define('STDIN', fopen("php://stdin","r"));
 
-use waylaidwanderer\SteamCommunity\Enum\LoginResult;
-use waylaidwanderer\SteamCommunity\MobileAuth\WgTokenInvalidException;
-use waylaidwanderer\SteamCommunity\SteamCommunity;
+use bogdanaslt\SteamCommunity\Enum\LoginResult;
+use bogdanaslt\SteamCommunity\MobileAuth\WgTokenInvalidException;
+use bogdanaslt\SteamCommunity\SteamCommunity;
 
 date_default_timezone_set('America/Los_Angeles');
 

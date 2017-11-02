@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 2:34 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\TradeOffers\Trade;
+namespace bogdanaslt\SteamCommunity\TradeOffers\Trade;
 
 
 class TradeAsset implements \JsonSerializable

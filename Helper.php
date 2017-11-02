@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 3:43 AM
- */
 
-namespace waylaidwanderer\SteamCommunity;
+namespace bogdanaslt\SteamCommunity;
 
 
 class Helper

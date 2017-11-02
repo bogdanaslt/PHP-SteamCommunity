@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-04
- * Time: 11:28 PM
- */
 
-namespace waylaidwanderer\SteamCommunity;
+namespace bogdanaslt\SteamCommunity;
 
 use phpseclib\Crypt\RSA;
 use phpseclib\Math\BigInteger;
-use waylaidwanderer\SteamCommunity\Enum\CreateAccountResult;
-use waylaidwanderer\SteamCommunity\Enum\LoginResult;
-use waylaidwanderer\SteamCommunity\MobileAuth\MobileAuth;
+use bogdanaslt\SteamCommunity\Enum\CreateAccountResult;
+use bogdanaslt\SteamCommunity\Enum\LoginResult;
+use bogdanaslt\SteamCommunity\MobileAuth\MobileAuth;
 
 class SteamCommunity
 {

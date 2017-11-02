@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 4:18 AM
- */
 
-namespace waylaidwanderer\SteamCommunity\TradeOffers\TradeOffer;
+namespace bogdanaslt\SteamCommunity\TradeOffers\TradeOffer;
 
 
 class Item

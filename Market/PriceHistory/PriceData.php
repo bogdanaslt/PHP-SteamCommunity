@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Joel
- * Date: 2015-12-28
- * Time: 7:06 PM
- */
 
-namespace waylaidwanderer\SteamCommunity\Market\PriceHistory;
-
+namespace bogdanaslt\SteamCommunity\Market\PriceHistory;
 
 class PriceData
 {
