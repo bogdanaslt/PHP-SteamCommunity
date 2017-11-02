@@ -1,4 +1,5 @@
-# PHP-SteamCommunity
+# Forked PHP-SteamCommunity
 
-This package is available to be installed using Composer via Packagist.  
-`composer require waylaidwanderer/php-steamcommunity`
+This is fork from waylaidwanderer/PHP-SteamCommunity for improvements. 
+
+For example, to use `http_build_query` instead of concatinating string
