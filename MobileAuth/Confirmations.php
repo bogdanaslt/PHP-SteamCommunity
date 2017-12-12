@@ -144,7 +144,15 @@ class Confirmations
 
     private function _sendConfirmationAjax(Confirmation $confirmation, $op)
     {
-        $url = 'https://steamcommunity.com/mobileconf/ajaxop?op=' . $op . '&' . $this->generateConfirmationQueryParams($op) . '&cid=' . $confirmation->getConfirmationId() . '&ck=' . $confirmation->getConfirmationKey();
+        $params = [
+            'op' => $op,
+            'cid' => $confirmation->getConfirmationId(),
+            'ck' => $confirmation->getConfirmationKey()
+        ];
+        
+        $query = http_build_query($params) . '&' . $this->generateConfirmationQueryParams($op);
+        
+        $url = 'https://steamcommunity.com/mobileconf/ajaxop?' . $query;
         $response = '';
         try {
             $response = $this->mobileAuth->steamCommunity()->cURL($url);

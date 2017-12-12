@@ -59,4 +59,12 @@ class Helper
     {
         return (new SteamCommunity())->cURL($url, $ref, $postData);
     }
+    
+    public static function validateTradeUrl($url)
+    {
+        $parsed = parse_url($url) + ['scheme' => false, 'host' => false, 'path' => false, 'query' => ''];
+        parse_str($parsed['query'], $query);
+        
+        return $parsed['host'] == 'steamcommunity.com' && dim($query['partner']) && dim($query['token']);
+    }
 }
