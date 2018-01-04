@@ -39,6 +39,8 @@ class SteamCommunity
 
     private $market;
     private $tradeOffers;
+    
+    private $proxy = false;
 
     /**
      * SteamCommunity constructor.
@@ -58,6 +60,9 @@ class SteamCommunity
         }
         if (isset($settings['apiKey'])) {
             $this->apiKey = $settings['apiKey'];
+        }
+        if (isset($settings['proxy'])) {
+            $this->proxy = $settings['proxy'];
         }
         if (isset($settings['mobileAuth'])) {
             $this->mobileAuth = new MobileAuth($settings['mobileAuth'], new SteamCommunity([
@@ -236,6 +241,9 @@ class SteamCommunity
         if (isset($ref)) {
             curl_setopt($ch, CURLOPT_REFERER, $ref);
         }
+        if ($this->proxy) {
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy);
+        }
         if (isset($postData)) {
             curl_setopt($ch, CURLOPT_POST, true);
             $postStr = "";
@@ -248,6 +256,7 @@ class SteamCommunity
         }
         $output = curl_exec($ch);
         curl_close($ch);
+        
         return $output;
     }
 
