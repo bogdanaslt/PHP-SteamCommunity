@@ -52,7 +52,95 @@ class TradeOffers
         $url = self::BASE_URL . 'sent/?history=1';
         return $this->_parseTradeOffers($this->steamCommunity->cURL($url), true);
     }
+    
+    public function getSentOfferStatus($offerId)
+    {
+        $url = self::BASE_URL . 'sent/';
+        return $this->_parseTradeOffer($this->steamCommunity->cURL($url), true, $offerId);
+    }
 
+    private function _parseTradeOffer($html, $isOurOffer, $offerId)
+    {
+        libxml_use_internal_errors(true);
+
+        $doc = new \DOMDocument();
+        $doc->loadHTML($html);
+        $xpath = new \DOMXPath($doc);
+
+        /** @var \DOMElement[] $tradeOfferElements */
+        $tradeOfferElement = $xpath->query('//div[@id[starts-with(.,"tradeofferid_'.$offerId.'")]]')->item(0);
+
+        $tradeOffer = new TradeOffer();
+        $tradeOffer->setIsOurOffer($isOurOffer);
+
+        $tradeOfferId = str_replace('tradeofferid_', '', $tradeOfferElement->getAttribute('id'));
+        $tradeOffer->setTradeOfferId($tradeOfferId);
+
+        // state
+        $bannerElement = $xpath->query('.//div[contains(@class, "tradeoffer_items_banner")]', $tradeOfferElement)->item(0);
+        if (is_null($bannerElement)) {
+            $tradeOffer->setTradeOfferState(TradeOffer\State::Active);
+        } else {
+            if (strpos($bannerElement->nodeValue, 'Awaiting Mobile Confirmation') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::NeedsConfirmation);
+                $tradeOffer->setConfirmationMethod(TradeOffer\ConfirmationMethod::MobileApp);
+            } else if (strpos($bannerElement->nodeValue, 'Awaiting Email Confirmation') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::NeedsConfirmation);
+                $tradeOffer->setConfirmationMethod(TradeOffer\ConfirmationMethod::Email);
+            } else if (strpos($bannerElement->nodeValue, 'Trade Offer Canceled') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::Canceled);
+                $canceledDate = strtotime(str_replace('Trade Offer Canceled ', '', $bannerElement->nodeValue));
+                if ($canceledDate !== false) {
+                    $tradeOffer->setTimeUpdated($canceledDate);
+                }
+            } else if (strpos($bannerElement->nodeValue, 'Trade Declined') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::Declined);
+                $declinedDate = strtotime(str_replace('Trade Declined ', '', $bannerElement->nodeValue));
+                if ($declinedDate !== false) {
+                    $tradeOffer->setTimeUpdated($declinedDate);
+                }
+            } else if (strpos($bannerElement->nodeValue, 'On hold') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::InEscrow);
+                $split = explode('.', $bannerElement->nodeValue);
+                $acceptedString = trim($split[0]);
+                $acceptedDate = \DateTime::createFromFormat('M j, Y @ g:ia', str_replace('Trade Accepted ', '', $acceptedString));
+                if ($acceptedDate !== false) {
+                    $tradeOffer->setTimeUpdated($acceptedDate->getTimestamp());
+                }
+                $escrowString = trim($split[1]);
+                $escrowDate = \DateTime::createFromFormat('M j, Y @ g:ia', str_replace('On hold until ', '', $escrowString));
+                if ($escrowDate !== false) {
+                    $tradeOffer->setEscrowEndDate($escrowDate->getTimestamp());
+                }
+            } else if (strpos($bannerElement->nodeValue, 'Trade Accepted') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::Accepted);
+                // 14 Dec, 2015 @ 4:32am
+                $acceptedDate = \DateTime::createFromFormat('j M, Y @ g:ia', str_replace('Trade Accepted ', '', trim($bannerElement->nodeValue)));
+                if ($acceptedDate !== false) {
+                    $tradeOffer->setTimeUpdated($acceptedDate->getTimestamp());
+                }
+            } else if (strpos($bannerElement->nodeValue, 'Items Now Unavailable For Trade') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::InvalidItems);
+            } else if (strpos($bannerElement->nodeValue, 'Counter Offer Made') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::Countered);
+                $counteredDate = strtotime(str_replace('Counter Offer Made ', '', $bannerElement->nodeValue));
+                if ($counteredDate !== false) {
+                    $tradeOffer->setTimeUpdated($counteredDate);
+                }
+            } else if (strpos($bannerElement->nodeValue, 'Trade Offer Expired') !== false) {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::Expired);
+                $expiredDate = strtotime(str_replace('Trade Offer Expired ', '', $bannerElement->nodeValue));
+                if ($expiredDate !== false) {
+                    $tradeOffer->setTimeUpdated($expiredDate);
+                }
+            } else {
+                $tradeOffer->setTradeOfferState(TradeOffer\State::Invalid);
+            }
+        }
+
+        return $tradeOffer;
+    }
+    
     /**
      * @param $html
      * @param $isOurOffer
