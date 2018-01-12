@@ -528,4 +528,15 @@ class SteamCommunity
     {
         return $this->mobileAuth;
     }
+    
+    public function ping()
+    {
+        $params = [
+            'sessionid' => $this->getSessionId()
+        ];
+        $html = $this->cURL(sprintf('http://steamcommunity.com/profiles/%s/tradeoffers/', $this->getSteamId()), null, $params, false);
+        preg_match('/\<title>(.*)\<\/title\>/', $html, $matched);
+        
+        return isset($matched[1]) ? $matched[1] : 'Steam Community';
+    }
 }
