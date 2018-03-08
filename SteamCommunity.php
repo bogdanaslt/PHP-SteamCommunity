@@ -534,9 +534,11 @@ class SteamCommunity
         $params = [
             'sessionid' => $this->getSessionId()
         ];
-        $html = $this->cURL(sprintf('http://steamcommunity.com/profiles/%s/tradeoffers/', $this->getSteamId()), null, $params, false);
-        preg_match('/\<title>(.*)\<\/title\>/', $html, $matched);
-        
-        return isset($matched[1]) ? $matched[1] : 'Steam Community';
+        $html = $this->cURL('https://steamcommunity.com/', null, $params, false);
+        $document = new \DOMDocument();
+        $document->loadHTML($html);
+        $xpath = new \DOMXPath($document);
+
+        return $xpath->query('//a[@data-miniprofile]')->length;
     }
 }
