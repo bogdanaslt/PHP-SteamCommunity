@@ -51,7 +51,7 @@ class Confirmations
 
                     $confKey = $confKeyMatches[1][$i];
                     $confOfferId = $confOfferMatches[1][$i];
-                    $confDesc = $confDescMatches[1][$i];
+                    $confDesc = isset($confDescMatches[1][$i]) ? $confDescMatches[1][$i] : '';
                     $confirmations[] = new Confirmation($confId, $confKey, $confOfferId, $confDesc);
 
                     $checkedConfIds[] = $confId;

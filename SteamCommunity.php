@@ -538,7 +538,7 @@ class SteamCommunity
         $document = new \DOMDocument();
         $document->loadHTML($html);
         $xpath = new \DOMXPath($document);
-
+        
         return $xpath->query('//a[@data-miniprofile]')->length;
     }
 }
