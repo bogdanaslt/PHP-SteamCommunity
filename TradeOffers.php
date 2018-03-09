@@ -437,6 +437,18 @@ class TradeOffers
             return isset($json['tradeofferid']);
         }
     }
+    
+    public function cancelTradeByIdViaAPI($tradeOfferId)
+    {
+        $url = "https://api.steampowered.com/IEconService/CancelTradeOffer/v1/?key={$this->steamCommunity->getApiKey()}&tradeofferid={$tradeOfferId}";
+        $response = $this->steamCommunity->cURL($url, null, [
+            "key" => $this->steamCommunity->getApiKey(),
+            "tradeofferid" => $tradeOfferId
+        ]);
+        $json = json_decode($response, true);
+        
+        return true;
+    }
 
     /**
      * Shortcut for creating a new trade offer with a user.
