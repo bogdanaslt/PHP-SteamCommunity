@@ -19,8 +19,8 @@ class Market
     public function getRecentCompleted()
     {
         try {
-            $url = "http://steamcommunity.com/market/recentcompleted";
-            $response = $this->steamCommunity->cURL($url, 'http://steamcommunity.com/market');
+            $url = "https://steamcommunity.com/market/recentcompleted";
+            $response = $this->steamCommunity->cURL($url, 'https://steamcommunity.com/market');
             $json = json_decode($response, true);
             return $json;
         } catch (\Exception $ex) {

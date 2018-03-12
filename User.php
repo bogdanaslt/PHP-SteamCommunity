@@ -7,7 +7,7 @@ use bogdanaslt\SteamCommunity\User\Group;
 
 class User
 {
-    const BASE_URL = "http://steamcommunity.com/profiles/";
+    const BASE_URL = "https://steamcommunity.com/profiles/";
     private $steamId;
     private $profile;
 

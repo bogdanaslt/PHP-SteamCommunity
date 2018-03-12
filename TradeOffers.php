@@ -8,7 +8,7 @@ use bogdanaslt\SteamCommunity\TradeOffers\TradeOffer;
 
 class TradeOffers
 {
-    const BASE_URL = 'http://steamcommunity.com/my/tradeoffers/';
+    const BASE_URL = 'https://steamcommunity.com/my/tradeoffers/';
 
     private $steamCommunity;
 
@@ -367,6 +367,26 @@ class TradeOffers
             }
         }
         return false;
+    }
+    
+    public function getIncomingTradeOffersViaAPI()
+    {
+        $tradeOffers = [];
+
+        $url = 'https://api.steampowered.com/IEconService/GetTradeOffers/v1/?key=' . $this->steamCommunity->getApiKey() . '&get_received_offers=1';
+        
+        $response = $this->steamCommunity->cURL($url);
+        $json = json_decode($response, true);
+        if (isset($json['response'])) {
+
+            if (isset($json['response']['trade_offers_received'])) {
+                foreach ($json['response']['trade_offers_received'] as $tradeOffer) {
+                    $tradeOffers[] = new TradeOffer($tradeOffer);
+                }
+            }
+        }
+
+        return $tradeOffers;
     }
 
     /**

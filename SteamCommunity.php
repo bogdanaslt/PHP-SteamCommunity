@@ -278,7 +278,7 @@ class SteamCommunity
 
     private function _setSession()
     {
-        $response = $this->cURL('http://steamcommunity.com/');
+        $response = $this->cURL('https://steamcommunity.com/');
         $pattern = '/g_steamID = (.*);/';
         preg_match($pattern, $response, $matches);
         if (!isset($matches[1])) {
