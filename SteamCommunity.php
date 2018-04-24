@@ -257,6 +257,11 @@ class SteamCommunity
         $output = curl_exec($ch);
         curl_close($ch);
         
+        if ($output === false) {
+            sleep(5);
+            return $this->cURL($url, $ref, $postData);
+        }
+
         return $output;
     }
 
@@ -531,6 +536,9 @@ class SteamCommunity
     
     public function ping()
     {
+                
+        libxml_use_internal_errors(true);
+        
         $params = [
             'sessionid' => $this->getSessionId()
         ];
