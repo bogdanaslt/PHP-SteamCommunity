@@ -255,16 +255,16 @@ class SteamCommunity
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postStr);
         }
         $output = curl_exec($ch);
-        curl_close($ch);
         
         if ($output === false) {
           print_r("Curl error: ". curl_error($ch) . "\n");
-          curl_close($ch);
           sleep(5);
-
+          curl_close($ch);
+        
           return $this->cURL($url, $ref, $postData);
         }
-
+        curl_close($ch);
+          
         return $output;
     }
 
