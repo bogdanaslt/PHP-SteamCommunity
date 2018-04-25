@@ -258,8 +258,11 @@ class SteamCommunity
         curl_close($ch);
         
         if ($output === false) {
-            sleep(5);
-            return $this->cURL($url, $ref, $postData);
+          print_r("Curl error: ". curl_error($ch) . "\n");
+          curl_close($ch);
+          sleep(5);
+
+          return $this->cURL($url, $ref, $postData);
         }
 
         return $output;
