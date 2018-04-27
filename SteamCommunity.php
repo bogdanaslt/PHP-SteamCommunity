@@ -274,8 +274,8 @@ class SteamCommunity
             }
             echo $error . "\nRetrying...\n";
             sleep(5);
-            
-            return $this->cURL($url, $ref, $postData, $try++);
+
+            return $this->cURL($url, $ref, $postData, ++$try);
         }
         curl_close($ch);
           
