@@ -4,6 +4,7 @@ namespace bogdanaslt\SteamCommunity\MobileAuth;
 
 
 use bogdanaslt\SteamCommunity\SteamCommunity;
+use bogdanaslt\SteamCommunity\SteamException;
 
 class MobileAuth
 {
@@ -39,7 +40,7 @@ class MobileAuth
         try {
             $this->steamCommunity->cURL('https://steamcommunity.com/login?oauth_client_id=DE45CD61&oauth_scope=read_profile%20write_profile%20read_client%20write_client');
         } catch (\Exception $ex) {
-
+            throw $ex;
         }
     }
 
@@ -54,7 +55,6 @@ class MobileAuth
             $this->oauth['wgtoken'] = $json['response']['token'];
             $this->oauth['wgtoken_secure'] = $json['response']['token_secure'];
         } catch (\Exception $ex) {
-
         }
     }
 

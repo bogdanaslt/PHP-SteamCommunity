@@ -41,6 +41,7 @@ class SteamCommunity
     private $tradeOffers;
     
     private $proxy = false;
+    private $curlRetries = 3;
 
     /**
      * SteamCommunity constructor.
@@ -64,6 +65,10 @@ class SteamCommunity
         if (isset($settings['proxy'])) {
             $this->proxy = $settings['proxy'];
         }
+        if (isset($settings['curlRetries'])) {
+            $this->curlRetries = $settings['curlRetries'];
+        }
+
         if (isset($settings['mobileAuth'])) {
             $this->mobileAuth = new MobileAuth($settings['mobileAuth'], new SteamCommunity([
                 'username' => $settings['username'],
@@ -218,7 +223,7 @@ class SteamCommunity
         return CreateAccountResult::GeneralFailure;
     }
 
-    public function cURL($url, $ref = null, $postData = null)
+    public function cURL($url, $ref = null, $postData = null, $try = 0)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -230,7 +235,8 @@ class SteamCommunity
             curl_setopt($ch, CURLOPT_COOKIEJAR, $this->_getCookieFilePath());
         }
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         if ($this->mobile) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, ["X-Requested-With: com.valvesoftware.android.steam.community"]);
             curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; Google Nexus 4 - 4.1.1 - API 16 - 768x1280 Build/JRO03S) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30");
@@ -257,11 +263,19 @@ class SteamCommunity
         $output = curl_exec($ch);
         
         if ($output === false) {
-          print_r("Curl error: ". curl_error($ch) . "\n");
-          sleep(5);
-          curl_close($ch);
-        
-          return $this->cURL($url, $ref, $postData);
+            $error = curl_error($ch);
+            curl_close($ch);
+            if ($try > $this->curlRetries) {
+                $exception = new SteamException(sprintf("cURL Error '%s' occured. Try reconnecting through different proxy.\n", $error));
+                $exception->setInformation([
+                    'proxy' => $this->proxy
+                ]);
+                throw $exception;
+            }
+            echo $error . "\nRetrying...\n";
+            sleep(5);
+            
+            return $this->cURL($url, $ref, $postData, $try++);
         }
         curl_close($ch);
           

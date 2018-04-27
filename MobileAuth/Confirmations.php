@@ -3,6 +3,7 @@
 namespace bogdanaslt\SteamCommunity\MobileAuth;
 
 use bogdanaslt\SteamCommunity\MobileAuth\Confirmations\Confirmation;
+use bogdanaslt\SteamCommunity\SteamException;
 
 class Confirmations
 {
@@ -25,9 +26,12 @@ class Confirmations
         $response = '';
         try {
             $response = $this->mobileAuth->steamCommunity()->cURL($url);
-        } catch (\Exception $ex) {
+        } catch(SteamException $e) {
+            throw $e;
+        } catch (\Exception $e) {
             return $confirmations;
         }
+
         if (strpos($response, '<div>Nothing to confirm</div>') === false) {
             $confIdRegex = '/data-confid="(\d+)"/';
             $confKeyRegex = '/data-key="(\d+)"/';
@@ -107,9 +111,12 @@ class Confirmations
         $response = '';
         try {
             $response = $this->mobileAuth->steamCommunity()->cURL($url);
+        } catch (SteamException $e){
+            throw $e;
         } catch (\Exception $ex) {
-
+            return '0';
         }
+
         if (!empty($response)) {
             $json = json_decode($response, true);
             if (isset($json['success']) && $json['success']) {
@@ -156,8 +163,10 @@ class Confirmations
         $response = '';
         try {
             $response = $this->mobileAuth->steamCommunity()->cURL($url);
+        } catch (SteamException $e) {
+            throw $e;
         } catch (\Exception $ex) {
-
+            return false;
         }
         if (!empty($response)) {
             $json = json_decode($response, true);
