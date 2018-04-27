@@ -449,6 +449,19 @@ class TradeOffers
             return isset($json['tradeofferid']);
         }
     }
+    
+    
+    public function declineTradeByIdViaAPI($tradeOfferId)
+    {
+        $url = "https://api.steampowered.com/IEconService/DeclineTradeOffer/v1/?key={$this->steamCommunity->getApiKey()}&tradeofferid={$tradeOfferId}";
+        $response = $this->steamCommunity->cURL($url, null, [
+            "key" => $this->steamCommunity->getApiKey(),
+            "tradeofferid" => $tradeOfferId
+        ]);
+        $json = json_decode($response, true);
+        
+        return true;
+    }
 
     /**
      * Cancel a trade offer.
