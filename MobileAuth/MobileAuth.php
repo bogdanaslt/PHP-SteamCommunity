@@ -55,6 +55,7 @@ class MobileAuth
             $this->oauth['wgtoken'] = $json['response']['token'];
             $this->oauth['wgtoken_secure'] = $json['response']['token_secure'];
         } catch (\Exception $ex) {
+            throw $ex;
         }
     }
 
